@@ -1,0 +1,14 @@
+2016-04-14 14:25:32,052 LogCenter.py[line:64] ERROR init from persist error
+2016-04-14 14:25:32,053 LogCenter.py[line:65] ERROR Traceback (most recent call last):
+  File "/home/fjs/Desktop/fjs-log/app/app_entity/LogCenter.py", line 49, in _init_from_persist
+    with open("./config/nodes.json") as open_file:
+IOError: [Errno 2] No such file or directory: './config/nodes.json'
+
+2016-04-14 14:25:32,053 Worker.py[line:109] INFO 进程启动成功:   LogCenter
+2016-04-14 14:57:08,536 Worker.py[line:109] INFO 进程启动成功:   LogCenter
+2016-04-14 16:03:46,370 Worker.py[line:109] INFO 进程启动成功:   LogCenter
+2016-04-14 16:04:19,323 Worker.py[line:109] INFO 进程启动成功:   LogCenter
+2016-04-14 16:05:39,058 Worker.py[line:109] INFO 进程启动成功:   LogCenter
+2016-04-14 16:05:51,699 Worker.py[line:109] INFO 进程启动成功:   LogCenter
+2016-04-14 16:23:39,959 Worker.py[line:109] INFO 进程启动成功:   LogCenter
+2016-04-14 16:29:11,832 Worker.py[line:109] INFO 进程启动成功:   LogCenter

@@ -1,0 +1,48 @@
+[
+  {
+    "type"      : "accepter",
+    "name"      : "push_accepter",
+    "id"        : "push_accepter",
+    "path"      : "./config/fjs.sock",
+    "port"      : 9000
+  },
+  {
+    "type"      : "key",
+    "name"      : "push_key",
+    "id"        : "push_key_work1",
+    "dbpath"    : "../db/push//key1",
+    "port"      : 9001
+  },
+  {
+    "type"      : "key",
+    "name"      : "push_key",
+    "id"        : "push_key_work2",
+    "dbpath"    : "../db/push/key2",
+    "port"      : 9002
+  },
+  {
+    "type"      : "key",
+    "name"      : "push_key",
+    "id"        : "push_key_work3",
+    "dbpath"    : "../db/push/key3",
+    "port"      : 9003
+  },
+  {
+    "type"      : "front",
+    "name"      : "push_web",
+    "id"        : "push_web_worker1",
+    "path"      : "./config/fjs.sock"
+  },
+  {
+    "type"      : "front",
+    "name"      : "push_web",
+    "id"        : "push_web_worker2",
+    "path"      : "./config/fjs.sock"
+  },
+  {
+    "type"      : "front",
+    "name"      : "push_web",
+    "id"        : "push_web_worker3",
+    "path"      : "./config/fjs.sock"
+  }
+]

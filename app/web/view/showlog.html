@@ -1,0 +1,161 @@
+<html>
+  <head>
+    <title>查看日志</title>
+    <meta name="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="jquery.console.new.js"></script>
+
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet">
+
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.js"></script>
+
+    <!-- Everything beyond this point is user-customized -->
+    <script type="text/javascript">
+
+
+        var ws_port = {% raw ws_port %};
+        var node_name = "{% raw node_name %}";
+        var log_name = "{%  raw log_name %}";
+        var ws_id = "{% raw ws_id %}";
+
+        var url = window.location.hostname;
+        var socket = null;
+
+        /**
+         * 服务器获取到新的日志的输送据之后会调用web页面的这个方法
+         */
+        function messages(data) {
+            var lines = JSON.parse(data);
+            for (var i = 0; i < lines.length; i++) {
+                var line = lines[i];
+                Message(line, "jquery-console-message-value")
+            }
+            scrollToBottom();
+        }
+
+        function stop() {
+            $("#opera").text(">启动");
+            $("#opera").one("click", start);
+            if (socket == null) {
+                return;
+            }
+            var stop_message = {"m": "pause", "args": []};
+            socket.send(JSON.stringify(stop_message));
+
+        }
+
+        function start() {
+            $("#opera").text(">暂停");
+            $("#opera").one("click", stop);
+            if (socket == null) {
+                return;
+            }
+            var start_message = {"m": "start", "args": []};
+            socket.send(JSON.stringify(start_message));
+
+        }
+
+        $(document).ready(function(){
+
+            socket = new WebSocket('ws://' + url + ":" + ws_port + "/");
+
+
+            socket.onopen = function(event) {
+                socket.onclose = function(event) {
+                    $("#ws_status").text("状态：未连接");
+                    socket = null;
+                };
+
+                $("#opera").one("click", stop);
+
+                $("#ws_status").text("状态：已经连接");
+
+                register_data = {"m": "register", "args": [ws_id, node_name, log_name]};
+                socket.send(JSON.stringify(register_data));
+
+
+                socket.onmessage = function(event) {
+                    var info = JSON.parse(event.data);
+                    var method_name = info["method"];
+                    var method = window[method_name];
+                    method(info["data"]);
+                };
+
+
+            };
+
+            var console1 = $('<div class="console1">');
+            $('#fjs').append(console1);
+            var controller1 = console1.console({
+
+
+            });
+
+        });
+    </script>
+
+
+    <style type="text/css" media="screen">
+      div.console1,div.console2,div.console3 { word-wrap: break-word; }
+      /* First console */
+      div.console1 { font-size: 14px }
+      div.console1 div.jquery-console-inner
+       {  height:900px; background:#333; padding:0.5em;
+         overflow:auto }
+      div.console1 div.jquery-console-prompt-box
+       { color:#fff; font-family:monospace; }
+      div.console1 div.jquery-console-focus span.jquery-console-cursor
+       { background:#fefefe; color:#333; font-weight:bold }
+      div.console1 div.jquery-console-message-error
+       { color:#ef0505; font-family:sans-serif; font-weight:bold;
+         padding:0.1em; }
+      div.console1 div.jquery-console-message-value
+       { color:#1ad027; font-family:monospace;
+         padding:0.1em; }
+      div.console1 div.jquery-console-message-type
+       { color:#52666f; font-family:monospace;
+         padding:0.1em; }
+      div.console1 span.jquery-console-prompt-label { font-weight:bold }
+      /* Second console */
+
+    </style>
+  </head>
+  <body>
+
+        <!--头部导航开始-->
+        <nav class="navbar navbar-default ">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Log Dashboard</a>
+            </div>
+
+
+          </div><!-- /.container-fluid -->
+        </nav>
+        <!--头部导航结束-->
+
+
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-2">
+                  <div class="list-group" style="margin-top: 20%;">
+                      <a href="#" class="list-group-item" id="ws_status">状态：未连接</a>
+                      <a href="#" class="list-group-item" id="opera">>暂停</a>
+                  </div>
+              </div>
+              <div class="col-md-10" id="fjs">
+
+              </div>
+            </div>
+        </div>
+
+  </body>
+</html>

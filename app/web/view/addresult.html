@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        {% if success %}
+            var success = true;
+        {% else %}
+            var success = false;
+        {% end %}
+        window.onload = function() {
+            if (success) {
+                alert("添加成功!");
+                window.location.href = "nodemanage";
+            } else {
+                alert("添加失败!");
+                window.location.href = "nodemanage";
+            }
+        };
+    </script>
+</head>
+<body>
+
+</body>
+</html>

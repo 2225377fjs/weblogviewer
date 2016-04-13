@@ -1,0 +1,32 @@
+2016-04-14 14:25:31,520 Worker.py[line:109] INFO 进程启动成功:   log_config
+2016-04-14 14:25:32,049 ConfigBean.py[line:78] INFO add process process in config id:LogCenter, address:{'ip': '0.0.0.0', 'port': 5670}
+2016-04-14 14:25:32,052 ConfigBean.py[line:130] INFO add entity in config, id:l_cen, tag:None, worker:LogCenter
+2016-04-14 14:25:32,589 ConfigBean.py[line:78] INFO add process process in config id:log_view, address:{'ip': '0.0.0.0', 'port': 7890}
+2016-04-14 14:57:08,021 Worker.py[line:109] INFO 进程启动成功:   log_config
+2016-04-14 14:57:08,530 ConfigBean.py[line:78] INFO add process process in config id:LogCenter, address:{'ip': '0.0.0.0', 'port': 5670}
+2016-04-14 14:57:08,531 ConfigBean.py[line:130] INFO add entity in config, id:l_cen, tag:None, worker:LogCenter
+2016-04-14 14:57:09,054 ConfigBean.py[line:78] INFO add process process in config id:log_view, address:{'ip': '0.0.0.0', 'port': 7890}
+2016-04-14 16:03:45,856 Worker.py[line:109] INFO 进程启动成功:   log_config
+2016-04-14 16:03:46,364 ConfigBean.py[line:78] INFO add process process in config id:LogCenter, address:{'ip': '0.0.0.0', 'port': 5670}
+2016-04-14 16:03:46,366 ConfigBean.py[line:130] INFO add entity in config, id:l_cen, tag:None, worker:LogCenter
+2016-04-14 16:03:46,899 ConfigBean.py[line:78] INFO add process process in config id:log_view, address:{'ip': '0.0.0.0', 'port': 7890}
+2016-04-14 16:04:18,783 Worker.py[line:109] INFO 进程启动成功:   log_config
+2016-04-14 16:04:19,309 ConfigBean.py[line:78] INFO add process process in config id:LogCenter, address:{'ip': '0.0.0.0', 'port': 5670}
+2016-04-14 16:04:19,314 ConfigBean.py[line:130] INFO add entity in config, id:l_cen, tag:None, worker:LogCenter
+2016-04-14 16:04:19,847 ConfigBean.py[line:78] INFO add process process in config id:log_view, address:{'ip': '0.0.0.0', 'port': 7890}
+2016-04-14 16:05:38,524 Worker.py[line:109] INFO 进程启动成功:   log_config
+2016-04-14 16:05:39,045 ConfigBean.py[line:78] INFO add process process in config id:LogCenter, address:{'ip': '0.0.0.0', 'port': 5670}
+2016-04-14 16:05:39,049 ConfigBean.py[line:130] INFO add entity in config, id:l_cen, tag:None, worker:LogCenter
+2016-04-14 16:05:39,587 ConfigBean.py[line:78] INFO add process process in config id:log_view, address:{'ip': '0.0.0.0', 'port': 7890}
+2016-04-14 16:05:51,157 Worker.py[line:109] INFO 进程启动成功:   log_config
+2016-04-14 16:05:51,684 ConfigBean.py[line:78] INFO add process process in config id:LogCenter, address:{'ip': '0.0.0.0', 'port': 5670}
+2016-04-14 16:05:51,688 ConfigBean.py[line:130] INFO add entity in config, id:l_cen, tag:None, worker:LogCenter
+2016-04-14 16:05:52,209 ConfigBean.py[line:78] INFO add process process in config id:log_view, address:{'ip': '0.0.0.0', 'port': 7890}
+2016-04-14 16:23:39,434 Worker.py[line:109] INFO 进程启动成功:   log_config
+2016-04-14 16:23:39,950 ConfigBean.py[line:78] INFO add process process in config id:LogCenter, address:{'ip': '0.0.0.0', 'port': 5670}
+2016-04-14 16:23:39,952 ConfigBean.py[line:130] INFO add entity in config, id:l_cen, tag:None, worker:LogCenter
+2016-04-14 16:23:40,493 ConfigBean.py[line:78] INFO add process process in config id:log_view, address:{'ip': '0.0.0.0', 'port': 7890}
+2016-04-14 16:29:11,305 Worker.py[line:109] INFO 进程启动成功:   log_config
+2016-04-14 16:29:11,822 ConfigBean.py[line:78] INFO add process process in config id:LogCenter, address:{'ip': '0.0.0.0', 'port': 5670}
+2016-04-14 16:29:11,825 ConfigBean.py[line:130] INFO add entity in config, id:l_cen, tag:None, worker:LogCenter
+2016-04-14 16:29:12,350 ConfigBean.py[line:78] INFO add process process in config id:log_view, address:{'ip': '0.0.0.0', 'port': 7890}

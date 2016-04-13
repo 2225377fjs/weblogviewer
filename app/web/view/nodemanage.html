@@ -1,0 +1,173 @@
+<html>
+<head>
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet">
+
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.js"></script>
+
+    <link href="https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css" rel="stylesheet">
+
+
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
+
+    <title>Log节点管理</title>
+    <script>
+        /*
+        data:
+        {
+            "entityid": info
+        }
+        info: {
+                "id": "entityid",
+                "type": "entityclass",
+                "pid": "pid",
+                "address": "123.32.213.1:9090"
+                "allcount": {
+                    "method1": {
+                        "count": 123,
+                        "time": 32131,
+                        "error": 121
+                    }
+                },
+                "detail": {
+                    "method1": [[count, time, error_time], [count, time, error_time]],
+                    "method2": [[count, time, error_time], [count, time, error_time]]
+                }
+            }
+        */
+
+//        function doIt(name) {
+//            alert(name);
+//        }
+//
+//        function format ( d ) {
+//        // `d` is the original data object for the row
+//            var now = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;" class="table table-hover">';
+//            now +=  "<thead> \
+//                    <tr class='danger'>\
+//                        <th>方法名</th>\
+//                        <th>调用次数</th>\
+//                        <th>调用总耗时</th>\
+//                        <th>错误次数</th>\
+//                        <th>查看详细信息</th>\
+//                    </tr></thead><tobdy>";
+//            for (var method_name in d) {
+//                if (method_name == "id") {
+//                    continue;
+//                }
+//                var item = '<tr class="info">'+
+//                    '<td>' + method_name + '</td>'+
+//                    '<td>' + d[method_name]["count"] + '</td>'+
+//                        '<td>' + d[method_name]["time"] + '</td>' +
+//                        '<td>' + d[method_name]["error"] + '</td>' +
+//                        '<td>' + '<a href="/rpcdetail?id=' + d["id"] + '&mname=' + method_name + '"> 查看详情 </a>' + '</td>' +
+//                '</tr>';
+//                now += item;
+//            }
+//            now += '</tobdy></table>';
+//            return now;
+//        }
+//
+//        var table;
+//
+//        $(document).ready(function(){
+//            table = $('#example').DataTable();
+//            for (var entity_id in data) {
+//                var info = data[entity_id];
+//                table.row.add([entity_id, info["pid"], info["type"], info["address"]]).draw(false);
+//            }
+//
+//            $('#example tbody').on('click', 'td', function () {
+//                var tr = $(this).closest('tr');
+//                var row = table.row( tr );
+//                var entity_id = row.data()[0];
+//                var all_count = data[entity_id]["allcount"];
+//                all_count["id"] = entity_id;
+//
+//                if ( row.child.isShown() ) {
+//                    row.child.hide();
+//                    tr.removeClass('shown');
+//                }
+//                else {
+//                    // Open this row
+//                    row.child( format(all_count) ).show();
+//                    tr.addClass('shown');
+//                }
+//            } );
+//        });
+
+    </script>
+
+</head>
+
+<body>
+
+
+    <!--头部导航开始-->
+    <nav class="navbar navbar-default ">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Log Dashboard</a>
+        </div>
+
+
+      </div><!-- /.container-fluid -->
+    </nav>
+    <!--头部导航结束-->
+
+
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3">
+              <div class="list-group" style="margin-top: 20%;">
+                  <a href="/nodes" class="list-group-item">Log节点信息</a>
+                  <a href="/nodemanage" class="list-group-item active">节点管理</a>
+              </div>
+          </div>
+          <div class="col-md-9">
+
+              <form method="post" action="addnode" class="form-horizontal" role="form" style="width: 450px">
+              <div id="legend" class="">
+                <legend class="">添加节点</legend>
+              </div>
+               <div class="form-group">
+                  <label for="firstname" class="col-sm-2 control-label">IP地址</label>
+                  <div class="col-sm-10">
+                     <input type="text" class="form-control" name="ip"
+                        placeholder="请输节点IP地址">
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label for="lastname" class="col-sm-2 control-label">端口</label>
+                  <div class="col-sm-10">
+                     <input type="text" class="form-control" name="port"
+                        placeholder="请输节点简体地址">
+                  </div>
+               </div>
+               <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                     <button type="submit" class="btn btn-default">添加</button>
+                  </div>
+               </div>
+            </form>
+
+
+          </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>
