@@ -1,5 +1,5 @@
-__author__ = 'fjs'
 # -*- coding: utf-8 -*-
+__author__ = 'fjs'
 
 
 from bean.Entity import Entity
@@ -26,7 +26,6 @@ def _create_id():
     if GLOBAL_ID > 100:
         GLOBAL_ID = 1
     return str(GLOBAL_ID)
-
 
 
 class LogGetter(object):

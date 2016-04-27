@@ -28,6 +28,7 @@
                     <tr class='danger'>\
                         <th>日志名字</th>\
                         <th>tail查看</th>\
+                        <th>gerp操作</th>\
                     </tr></thead><tobdy>";
             for (var index in d) {
                 if (index == "node_name") {
@@ -37,7 +38,8 @@
                 var item = '<tr class="info">'+
                     '<td>' + log_name + '</td>'+
                         '<td>' + '<a target="_blank" href="/showlog?node=' + d["node_name"] + '&log=' + log_name + '"> 查看详情 </a>' + '</td>' +
-                '</tr>';
+                        '<td>' + '<a target="_blank" href="/greplog?node=' + d["node_name"] + '&log=' + log_name + '"> 查看详情 </a>' + '</td>' +
+                        '</tr>';
                 now += item;
             }
             now += '</tobdy></table>';

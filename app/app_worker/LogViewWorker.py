@@ -35,11 +35,25 @@ class ShowLog(tornado.web.RequestHandler):
     def get(self, *args, **kwargs):
         node_name = self.get_query_argument("node")
         log_name = self.get_query_argument("log")
-        web_socekt_uuid = str(uuid.uuid4())                  # 为连接websocket分配一个token
+        web_socekt_uuid = str(uuid.uuid4())                            # 为连接websocket分配一个token
         get_manager().get_bean(WS_MANAGER).add_token(web_socekt_uuid)  # 将这个token保存起来
         render_parms = dict(ws_port=WS_PORT, node_name=node_name, log_name=log_name)
         render_parms["ws_id"] = web_socekt_uuid
         self.render("showlog.html", **render_parms)
+
+
+class GrepLog(tornado.web.RequestHandler):
+    """
+    用于在页面上执行grep的操作，这里与showlog的实现类似，也是需要分配一个token，让客户端连接上来做验证
+    """
+    def get(self, *args, **kwargs):
+        node_name = self.get_query_argument("node")
+        log_name = self.get_query_argument("log")
+        web_socekt_uuid = str(uuid.uuid4())                            # 为连接websocket分配一个token
+        get_manager().get_bean(WS_MANAGER).add_token(web_socekt_uuid)  # 将这个token保存起来
+        render_parms = dict(ws_port=WS_PORT, node_name=node_name, log_name=log_name)
+        render_parms["ws_id"] = web_socekt_uuid
+        self.render("grep.html", **render_parms)
 
 
 class AllNode(tornado.web.RequestHandler):
@@ -135,6 +149,64 @@ class LogWebSocket(WebSocketApplication):
     def start(self):
         self._stop = False
 
+    def do_grep(self, content):
+        self.grep(content)
+
+    def register_grep(self, token, node_name, log_name):
+        """
+        用于注册grep的连接
+        """
+        if not get_manager().get_bean(WS_MANAGER).consume(token):
+            self.ws.close()
+            return
+        self._auth = True
+        self._node_name = node_name
+        self._log_name = log_name
+
+        # self.grep("fjs")
+
+    def grep(self, content):
+        """
+        对指定的日志进行grep的操作
+        （1）向center进行请求，让其在相应的node上面创建logGrep，然后返回相关信息
+        （2）这边创建对应entity的stub对象，然后调用相应的方法来获取grep出来的数据
+        """
+        if not self._auth:
+            self.ws.close()
+            return
+        center_stub = get_gem().get_remote_entity(LOG_CENTER_NAME)
+        remote_info = center_stub.get_remote_grep_info(self._node_name, self._log_name, content)
+        address, entity_id = remote_info
+        grep_stub = get_gem().create_remote_stub(entity_id, {"ip": address[0], "port": address[1]})
+
+        def _run():
+            """
+            不断的从远端获取grep出来的数据
+            """
+            try:
+                while 1:
+                    data, is_over, is_time_out = grep_stub.get_data()
+                    if data:                                             # 将数据推送到web
+                        json_data = json.dumps(data)
+                        out_data = dict(method="messages", data=json_data)
+                        self.ws.send(json.dumps(out_data))
+                    if is_time_out:                                     # gerp子进程执行超时
+                        out_data = dict(method="time_out", data="")     # 通知web端，grep执行超时了
+                        self.ws.send(json.dumps(out_data))
+                        grep_stub.close()
+                        break
+                    elif is_over:                                        # grep正常退出
+                        out_data = dict(method="over", data="")     # 通知web端，grep执行超时了
+                        self.ws.send(json.dumps(out_data))
+                        grep_stub.close()
+                        break
+                    if not data:
+                        gevent.sleep(0.5)     # 防止调用太过频繁了，就直接睡眠0.5秒
+            except:
+                pass
+
+        gevent.spawn(_run)
+
     def register(self, token, node_name, log_name):
         """
         websocket连接上来之后，先要表示直接要监听的节点的名字和日志的名字
@@ -150,6 +222,7 @@ class LogWebSocket(WebSocketApplication):
         try:
             if not get_manager().get_bean(WS_MANAGER).consume(token):
                 self.ws.close()
+                return
             self._auth = True
             self._node_name = node_name
             self._log_name = log_name
@@ -234,6 +307,7 @@ class LogViewWorker(EntityWorker):
 
         self._http_server = HttpConnector(self._http_port)
         self._http_server.add_route("/showlog", ShowLog)
+        self._http_server.add_route("/greplog", GrepLog)
         self._http_server.add_route("/nodes", AllNode)
         self._http_server.add_route("/nodemanage", NodeManage)
         self._http_server.add_route("/addnode", AddNode)

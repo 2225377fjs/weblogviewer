@@ -1,5 +1,5 @@
-__author__ = 'fjs'
 # -*- coding: utf-8 -*-
+__author__ = 'fjs'
 
 
 from bean.Entity import Entity
@@ -122,6 +122,26 @@ class LogCenter(Entity):
             return node_info["address"], sender_id
         except:
             logging.error("创建远端sender异常")
+            logging.error(traceback.format_exc())
+
+    @rpc_method()
+    def get_remote_grep_info(self, node_name, log_name, content):
+        """
+        在需要对远端的日志进行grep操作之前，web进程会通过center来在对应的node上面出创建LogGrep对象
+
+        这里通过调用远端node的stub来创建LogGrep，然后将对应的entity的信息返回回去，用于web进程创建相应entity的stub对象
+        注意：这里get_remote_info不一样，一个用来grep，一个用来tail
+        :param node_name:
+        :param log_name:
+        :return:  远端进程的监听地址和创建的grep的id
+        """
+        try:
+            node_info = self._nodes[node_name]
+            stub = node_info["node_stub"]
+            sender_id = stub.create_grep(log_name, content)
+            return node_info["address"], sender_id
+        except:
+            logging.error("创建远端grep异常")
             logging.error(traceback.format_exc())
 
     @rpc_method()

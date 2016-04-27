@@ -1,6 +1,10 @@
+# -*- coding: utf-8 -*-
 __author__ = 'fjs'
+
 import gevent.monkey
 gevent.monkey.patch_all()
+gevent.monkey.patch_all(subprocess=True)           # 在1.1版本之前，subprocess模块是不打包的
+
 
 import sys
 

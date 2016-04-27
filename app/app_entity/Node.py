@@ -5,14 +5,12 @@ __author__ = 'fjs'
 from bean.Entity import Entity
 from bean.Entity import rpc_method
 from app_entity.LogSender import LogSender
+from app_entity.LogGrep import LogGrep
 
 #
 # 被监控的服务器进程的提供基本服务的entity，每一个被监控的服务器都应该启动一个进程
 # 创建一个Node来对外提供服务
 #
-
-
-
 NODE_NAME = "l_no"
 
 
@@ -49,4 +47,15 @@ class Node(Entity):
         log_path = self._log_infos[log_name]
         sender = LogSender(log_path)
         return sender.id
+
+    @rpc_method()
+    def create_grep(self, log_name, content):
+        """
+        用于创建一个LogGrep对象，然后返回它的id
+        :param log_name:  需要grep的文件的名字
+        :param content:   需要grep的内容
+        """
+        log_path = self._log_infos[log_name]
+        grep = LogGrep(log_path, content)
+        return grep.id
 

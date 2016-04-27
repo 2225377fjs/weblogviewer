@@ -438,6 +438,8 @@
             extern.focus();
     };
 
+    window.clearScreen = clearScreen;
+
     function deleteNextWord() {
       // A word is defined within this context as a series of alphanumeric
       // characters.
